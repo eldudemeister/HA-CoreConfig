@@ -1,0 +1,126 @@
+  - platform: rest
+    resource: http://192.168.68.110:7777/container/bazarr
+    name: Bazarr
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/plex
+    name: Plex
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/iCloudPD-matt
+    name: iCloudPD-matt
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/docker_bitwarden_1
+    name: Bitwarden
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/healthchecks
+    name: Healthchecks
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/homeassistant
+    name: Home Assistant
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/channels
+    name: Channels
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/nzbget
+    name: NZBGet
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/sonarr
+    name: Sonarr
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/radarr
+    name: Radarr
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/letsencrypt
+    name: Lets Encrypt
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/docker_monitoring_1
+    name: Glances
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/home-assistant
+    name: Home Assistant
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/node-red
+    name: Node Red
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/mosquitto
+    name: Mosquitto
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/adbd
+    name: Android Debug Bridge
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/code-server
+    name: Code Server
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/docker_esphome_1
+    name: ESP Home
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/tautulli
+    name: Tautulli
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/mariadb
+    name: MariaDB
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+  - platform: rest
+    resource: http://127.0.0.1:7777/container/beets
+    name: Beets
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'

@@ -1,0 +1,74 @@
+ - platform: netdata
+   host: '192.168.68.117'
+   port: '19999'
+   name: PhosconPi
+   resources:
+    system.cpu:
+      data_group: system.cpu
+      element: system
+    system.ram:
+      data_group: 'system.ram'
+      element: 'used'
+      icon: mdi:chip
+    system.ram:
+      data_group: 'system.ram'
+      element: 'free'
+      icon: mdi:chip
+ - platform: version
+   name: Installed Version
+   source: local
+ - platform: version
+   name: Latest Available Version
+   beta: false
+   image: raspberrypi3
+   source: hassio
+ - platform: dnsip
+ - platform: cert_expiry
+   host: bridgemanor.co.uk
+ - platform: rest
+   resource: http://127.0.0.1:61208/api/3/uptime
+   name: "Linux Server Uptime"
+   value_template: '{{ value_json }}'
+   scan_interval: 60
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/plex
+   name: Plex Status
+   value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/iCloudPD-matt
+   name: iCloudPD Status
+   value_template: '{{ value_json.state }}' 
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/sonarr
+   name: Sonarr Status
+   value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/radarr
+   name: Radarr Status
+   value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/nzbget
+   name: NZBGet Status
+   value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/bazarr
+   name: Bazarr Status
+   value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/channels-dvr
+   name: Channels DVR Status
+   value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/ombi
+   name: Ombi Status
+   value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/letsencrypt
+   name: LetsEncrypt Status
+   value_template: '{{ value_json.state }}'
+ - platform: template
+   sensors:
+      speedtest_lastrun:
+        entity_id: sensor.speedtest_download # Entity to monitor for changes
+        friendly_name: "Speed Test Last Run"
+        value_template: "{{as_timestamp(states.sensor.speedtest_download.last_changed) | timestamp_custom('%A %d-%b-%y, %H:%M:%S')}}"

@@ -1,0 +1,124 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensor.yaml
+switch: !include switch.yaml
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+media_player:
+  - platform: androidtv
+    name: ShieldTV
+    host: 192.168.68.103
+    adb_server_ip: 127.0.0.1
+  - platform: androidtv
+    name: Bedroom FireStick
+    host: 192.168.68.112
+    adb_server_ip: 127.0.0.1
+  - platform: channels
+    name: Shield
+    host: 192.168.68.103
+  - platform: channels
+    name: Bedroom
+    host: 192.168.68.112
+    
+cloudflare:
+  email: !secret cloudfare_email
+  api_key: !secret cloudfare_apikey
+  zone: !secret cloudfare_zone
+  records:
+    - !secret cloudfare_zone
+
+homeassistant:
+  auth_providers:
+   - type: homeassistant
+   - type: trusted_networks
+     trusted_networks:
+       - 127.0.0.1
+       - 192.168.68.0/24
+     allow_bypass_login: true
+
+badnest:
+  issue_token: !secret badnest_token
+  cookie: !secret badnest_cookie
+  region: uk
+
+climate:
+  - platform: badnest
+    scan_interval: 10
+
+notify:
+  - platform: nfandroidtv
+    name: shield
+    host: 192.168.68.103
+
+esphome:
+
+device_tracker:
+  - platform: tile
+    username: !secret tile_username
+    password: !secret tile_password
+  - platform: mqtt
+    devices:
+      mattsiphone: 'monitor/monitorpi/matts_iphone/device_tracker'
+      amysiphone: 'monitor/monitorpi/amys_iphone/device_tracker'
+
+pi_hole:
+  - host: 192.168.68.106
+    api_key: !secret pihole_apikey
+
+zone: 
+  - name: Home
+    latitude: 51.402343
+    longitude: -0.756625
+    radius: 25
+    icon: mdi:home
+
+input_select:
+  gateway_color_mode:
+    name: Color mode
+    options:
+    - Normal
+    - Red
+    - Orange
+    - Yellow
+    - Green
+    - Blue
+    - Indigo
+    icon: mdi:format-color-fill
+
+google:
+  client_id: !secret googleclient_id
+  client_secret: !secret googleclient_secret
+
+recorder:
+  db_url: !secret mariadb_link
+
+speedtestdotnet:
+  scan_interval:
+    days: 1
+  monitored_conditions:
+  - ping
+  - download
+  - upload
+
+wake_on_lan:
+
+samsungtv:
+  - host: 192.168.68.118
+    name: Living Room TV
+    turn_on_action:
+      - service: wake_on_lan.send_magic_packet
+        data:
+          mac: "1C-5A-3E-58-2D-74"
