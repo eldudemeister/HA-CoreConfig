@@ -1,3 +1,7 @@
+ - platform: time_date
+   display_options:
+      - 'time'
+      - 'date'
  - platform: netdata
    host: '192.168.68.117'
    port: '19999'
@@ -66,6 +70,18 @@
    resource: http://192.168.68.110:7777/container/letsencrypt
    name: LetsEncrypt Status
    value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/ha_dockermon/stats
+   name: HA Dockermon Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: ha_dockermon_memory_average
+   entities:
+     - sensor.ha_dockermon_memory
+   duration:
+     days: 2
  - platform: template
    sensors:
       speedtest_lastrun:
