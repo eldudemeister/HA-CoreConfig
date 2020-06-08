@@ -39,29 +39,197 @@
    name: Plex Status
    value_template: '{{ value_json.state }}'
  - platform: rest
+   resource: http://192.168.68.110:7777/container/plex/stats
+   name: Plex Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: plex_memory_average
+   entities:
+     - sensor.plex_memory
+   duration:
+     days: 2
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/plex/stats
+   name: Plex CPU
+   scan_interval: 900
+   value_template: '{{ (value_json.cpu_stats.cpu_usage.total_usage /1000/1000/1000/1000) |round(2) }}'
+   unit_of_measurement: '%'
+ - platform: average
+   name: plex_cpu_average
+   entities:
+     - sensor.plex_cpu
+   duration:
+     days: 2
+ - platform: rest
    resource: http://192.168.68.110:7777/container/iCloudPD-matt
    name: iCloudPD Status
    value_template: '{{ value_json.state }}' 
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/iCloudPD-matt/stats
+   name: iCloudPD Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: icloudpd_memory_average
+   entities:
+     - sensor.icloudpd_memory
+   duration:
+     days: 2
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/iCloudPD-matt/stats
+   name: iCloudPD CPU
+   scan_interval: 900
+   value_template: '{{ (value_json.cpu_stats.cpu_usage.total_usage /1000/1000/1000/1000) |round(2) }}'
+   unit_of_measurement: '%'
+ - platform: average
+   name: icloudpd_cpu_average
+   entities:
+     - sensor.icloudpd_cpu
+   duration:
+     days: 2
  - platform: rest
    resource: http://192.168.68.110:7777/container/sonarr
    name: Sonarr Status
    value_template: '{{ value_json.state }}'
  - platform: rest
+   resource: http://192.168.68.110:7777/container/sonarr/stats
+   name: Sonarr Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: sonarr_memory_average
+   entities:
+     - sensor.sonarr_memory
+   duration:
+     days: 2
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/sonarr/stats
+   name: Sonarr CPU
+   scan_interval: 900
+   value_template: '{{ (value_json.cpu_stats.cpu_usage.total_usage /1000/1000/1000/1000) |round(2) }}'
+   unit_of_measurement: '%'
+ - platform: average
+   name: sonarr_cpu_average
+   entities:
+     - sensor.sonarr_cpu
+   duration:
+     days: 2
+ - platform: rest
    resource: http://192.168.68.110:7777/container/radarr
    name: Radarr Status
    value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/radarr/stats
+   name: Radarr Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: radarr_memory_average
+   entities:
+     - sensor.radarr_memory
+   duration:
+     days: 2
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/radarr/stats
+   name: Radarr CPU
+   scan_interval: 900
+   value_template: '{{ (value_json.cpu_stats.cpu_usage.total_usage /1000/1000/1000/1000) |round(2) }}'
+   unit_of_measurement: '%'
+ - platform: average
+   name: radarr_cpu_average
+   entities:
+     - sensor.radarr_cpu
+   duration:
+     days: 2
  - platform: rest
    resource: http://192.168.68.110:7777/container/nzbget
    name: NZBGet Status
    value_template: '{{ value_json.state }}'
  - platform: rest
+   resource: http://192.168.68.110:7777/container/nzbget/stats
+   name: NZBGet Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: nzbget_memory_average
+   entities:
+     - sensor.nzbget_memory
+   duration:
+     days: 2
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/nzbget/stats
+   name: NZBGet CPU
+   scan_interval: 900
+   value_template: '{{ (value_json.cpu_stats.cpu_usage.total_usage /1000/1000/1000/1000) |round(2) }}'
+   unit_of_measurement: '%'
+ - platform: average
+   name: nzbget_cpu_average
+   entities:
+     - sensor.nzbget_cpu
+   duration:
+     days: 2
+ - platform: rest
    resource: http://192.168.68.110:7777/container/bazarr
    name: Bazarr Status
    value_template: '{{ value_json.state }}'
  - platform: rest
+   resource: http://192.168.68.110:7777/container/bazarr/stats
+   name: Bazarr Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: bazarr_memory_average
+   entities:
+     - sensor.bazarr_memory
+   duration:
+     days: 2
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/bazarr/stats
+   name: Bazarr CPU
+   scan_interval: 900
+   value_template: '{{ (value_json.cpu_stats.cpu_usage.total_usage /1000/1000/1000/1000) |round(2) }}'
+   unit_of_measurement: '%'
+ - platform: average
+   name: bazarr_cpu_average
+   entities:
+     - sensor.bazarr_cpu
+   duration:
+     days: 2
+ - platform: rest
    resource: http://192.168.68.110:7777/container/channels-dvr
    name: Channels DVR Status
    value_template: '{{ value_json.state }}'
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/channels-dvr/stats
+   name: Channels DVR Memory
+   scan_interval: 900
+   value_template: '{{ (value_json.memory_stats.usage /1024/1024) |round(2) }}'
+   unit_of_measurement: 'MB'
+ - platform: average
+   name: channelsdvr_memory_average
+   entities:
+     - sensor.channelsdvr_memory
+   duration:
+     days: 2
+ - platform: rest
+   resource: http://192.168.68.110:7777/container/channels-dvr/stats
+   name: Channels DVR CPU
+   scan_interval: 900
+   value_template: '{{ (value_json.cpu_stats.cpu_usage.total_usage /1000/1000/1000/1000) |round(2) }}'
+   unit_of_measurement: '%'
+ - platform: average
+   name: channelsdvr_cpu_average
+   entities:
+     - sensor.channelsdvr_cpu
+   duration:
+     days: 2
  - platform: rest
    resource: http://192.168.68.110:7777/container/ombi
    name: Ombi Status
