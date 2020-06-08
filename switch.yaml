@@ -60,7 +60,7 @@
     is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
   - platform: rest
     resource: http://127.0.0.1:7777/container/letsencrypt
-    name: Lets Encrypt
+    name: LetsEncrypt
     body_on: '{"state": "start"}'
     body_off: '{"state": "stop"}'
     is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
@@ -78,7 +78,7 @@
     is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
   - platform: rest
     resource: http://127.0.0.1:7777/container/node-red
-    name: Node Red
+    name: Node-Red
     body_on: '{"state": "start"}'
     body_off: '{"state": "stop"}'
     is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
@@ -102,7 +102,7 @@
     is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
   - platform: rest
     resource: http://127.0.0.1:7777/container/docker_esphome_1
-    name: ESP Home
+    name: ESPHome
     body_on: '{"state": "start"}'
     body_off: '{"state": "stop"}'
     is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
@@ -115,12 +115,6 @@
   - platform: rest
     resource: http://127.0.0.1:7777/container/mariadb
     name: MariaDB
-    body_on: '{"state": "start"}'
-    body_off: '{"state": "stop"}'
-    is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
-  - platform: rest
-    resource: http://127.0.0.1:7777/container/beets
-    name: Beets
     body_on: '{"state": "start"}'
     body_off: '{"state": "stop"}'
     is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
