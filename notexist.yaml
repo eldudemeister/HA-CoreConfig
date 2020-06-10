@@ -1,0 +1,43 @@
+views:
+  - badges:
+      - entity: device_tracker.amys_iphone_2
+      - entity: sensor.hallway_sensor_2
+    cards:
+      - entities:
+          - light.bedroom_light
+          - light.hall_light
+          - light.cubby_light
+          - light.bedside_light
+          - light.wled
+          - input_boolean.hall_motion_bypass
+          - light.bulb
+        head:
+          label: Lights
+          padding: 250
+          type: section
+        type: 'custom:fold-entity-row'
+      - entity: climate.living_room_thermostat
+        name: Living Room
+        type: thermostat
+      - entities:
+          - entity: sensor.installed_version
+          - entity: sensor.latest_available_version
+          - entity: sensor.speedtest_lastrun
+        head:
+          label: System Info
+          type: section
+        type: 'custom:fold-entity-row'
+      - content: |-
+
+          {{ states('sensor.time') }}
+        font-size: 150vw
+        height: 100px
+        left: 11.1%
+        opacity: 0.75
+        top: 9%
+        type: markdown
+        width: 15.5vw
+      - entity: weather.home
+        type: weather-forecast
+    path: bridge-manor
+    title: Bridge Manor
