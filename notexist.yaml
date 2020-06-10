@@ -1,3 +1,5 @@
+custom_header:
+   compact_mode: true
 views:
   - badges:
       - entity: device_tracker.amys_iphone_2

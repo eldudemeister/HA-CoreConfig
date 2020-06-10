@@ -126,6 +126,8 @@ lovelace:
       type: module
     - url: /local/homekit-panel-card.js
       type: module
+    - url: /local/custom-header.js?v=1.5.7
+      type: module
   dashboards:
     lovelace-bridge:
       mode: yaml

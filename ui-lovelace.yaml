@@ -1,4 +1,6 @@
 title: Bridge Manor
+custom_header:
+  compact_mode: true
 views:
   - path: default_view
     title: Home
