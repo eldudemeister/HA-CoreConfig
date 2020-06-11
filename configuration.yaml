@@ -119,20 +119,3 @@ remote:
     mac: 24-DF-A7-7A-A6-53
     type: rm_mini3_redbean
 
-lovelace:
-  mode: yaml
-  resources:
-    - url: /local/fold-entity-row.js
-      type: module
-    - url: /local/homekit-panel-card.js
-      type: module
-    - url: /local/custom-header.js?v=1.5.7
-      type: module
-  dashboards:
-    lovelace-bridge:
-      mode: yaml
-      filename: notexist.yaml
-      title: Generated
-      icon: mdi:tools
-      show_in_sidebar: true
-      require_admin: true
