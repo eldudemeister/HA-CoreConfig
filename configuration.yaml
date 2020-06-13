@@ -119,3 +119,5 @@ remote:
     mac: 24-DF-A7-7A-A6-53
     type: rm_mini3_redbean
 
+shell_command:
+  adb: '/usr/bin/adb connect {{ ip_adb }}'
