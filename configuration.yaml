@@ -73,7 +73,8 @@ device_tracker:
     devices:
       mattsiphone: 'monitor/monitorpi/matts_iphone/device_tracker'
       amysiphone: 'monitor/monitorpi/amys_iphone/device_tracker'
-
+      amyiphone: 'monitor/officemonitor/amys_iphone/device_tracker'
+      mattiphone: 'monitor/officemonitor/matts_iphone/device_tracker'
 pi_hole:
   - host: 192.168.68.106
     api_key: !secret pihole_apikey
@@ -121,3 +122,5 @@ remote:
 
 shell_command:
   adb: '/usr/bin/adb connect {{ ip_adb }}'
+
+browser_mod:
