@@ -1,5 +1,5 @@
 family:
     name: Family
     entities:
-      - device_tracker.amysiphone
-      - device_tracker.mattsiphone
+      - input_boolean.matt_home
+      - input_boolean.amy_home

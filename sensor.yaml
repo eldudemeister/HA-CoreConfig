@@ -601,3 +601,37 @@
         entity_id: sensor.speedtest_download # Entity to monitor for changes
         friendly_name: "Speed Test Last Run"
         value_template: "{{as_timestamp(states.sensor.speedtest_download.last_changed) | timestamp_custom('%A %d-%b-%y, %H:%M:%S')}}"
+ - platform: mqtt
+   state_topic: 'monitor/monitorpi/matts_iphone'
+   value_template: '{{ value_json.confidence }}'
+   unit_of_measurement: '%'
+   name: 'Matt House'
+ - platform: mqtt
+   state_topic: 'monitor/officemonitor/matts_iphone'
+   value_template: '{{ value_json.confidence }}'
+   unit_of_measurement: '%'
+   name: 'Matt Office'
+ - platform: min_max
+   name: "Matt Home Occupancy Confidence"
+   type: max
+   round_digits: 0
+   entity_ids:
+    - sensor.matt_house
+    - sensor.matt_office
+ - platform: mqtt
+   state_topic: 'monitor/monitorpi/amys_iphone'
+   value_template: '{{ value_json.confidence }}'
+   unit_of_measurement: '%'
+   name: 'Amy House'
+ - platform: mqtt
+   state_topic: 'monitor/officemonitor/amys_iphone'
+   value_template: '{{ value_json.confidence }}'
+   unit_of_measurement: '%'
+   name: 'Amy Office'
+ - platform: min_max
+   name: "Amy Home Occupancy Confidence"
+   type: max
+   round_digits: 0
+   entity_ids:
+    - sensor.amy_office
+    - sensor.amy_house
