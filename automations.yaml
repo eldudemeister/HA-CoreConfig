@@ -1,1 +1,26 @@
-[]
+- id: '1592466029585'
+  alias: Matt arrived at work
+  description: ''
+  trigger:
+  - entity_id: device_tracker.matts_iphone
+    event: enter
+    platform: zone
+    zone: zone.matt_work
+  condition: []
+  action:
+  - data:
+      message: Matt has arrived at work :)
+    service: notify.mobile_app_amys_iphone
+- id: '1592466090508'
+  alias: Matt left work
+  description: ''
+  trigger:
+  - entity_id: device_tracker.matts_iphone
+    event: leave
+    platform: zone
+    zone: zone.matt_work
+  condition: []
+  action:
+  - data:
+      message: Matt is on his way home!
+    service: notify.mobile_app_amys_iphone
