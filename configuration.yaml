@@ -24,14 +24,14 @@ media_player:
     adb_server_ip: 127.0.0.1
   - platform: androidtv
     name: Bedroom FireStick
-    host: 192.168.68.112
+    host: 192.168.68.105
     adb_server_ip: 127.0.0.1
   - platform: channels
     name: Shield
     host: 192.168.68.103
   - platform: channels
     name: Bedroom
-    host: 192.168.68.112
+    host: 192.168.68.105
     
 cloudflare:
   email: !secret cloudfare_email
