@@ -123,7 +123,23 @@ remote:
     mac: 24-DF-A7-7A-A6-53
     type: rm_mini3_redbean
 
-shell_command:
-  adb: '/usr/bin/adb connect {{ ip_adb }}'
-
 browser_mod:
+
+docker_monitor:
+  hosts:
+    - url: unix:///var/run/docker.sock
+      name: Docker
+      event: true
+      monitored_conditions:
+        - version
+      containers:
+        plex:
+          switch: False
+          sensors:
+            - status
+            - uptime
+            - cpu_percentage_usage
+            - memory_usage
+            - memory_percentage_usage
+            - network_total_up
+            - network_total_down
