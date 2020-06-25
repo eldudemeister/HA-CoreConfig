@@ -32,6 +32,12 @@ media_player:
   - platform: channels
     name: Bedroom
     host: 192.168.68.105
+  - platform: spotify_metafy
+    users:
+      spotify_entity_id: media_player.spotify_matt
+      destination: Kitchen Display
+      playlists:
+      - uri: spotify:playlist:37i9dQZF1CAaiIWVF9iQy0
     
 cloudflare:
   email: !secret cloudfare_email
@@ -89,19 +95,6 @@ zone:
     radius: 25
     icon: mdi:home
 
-input_select:
-  gateway_color_mode:
-    name: Color mode
-    options:
-    - Normal
-    - Red
-    - Orange
-    - Yellow
-    - Green
-    - Blue
-    - Indigo
-    icon: mdi:format-color-fill
-
 google:
   client_id: !secret googleclient_id
   client_secret: !secret googleclient_secret
@@ -125,21 +118,51 @@ remote:
 
 browser_mod:
 
-docker_monitor:
-  hosts:
-    - url: unix:///var/run/docker.sock
-      name: Docker
-      event: true
-      monitored_conditions:
-        - version
-      containers:
-        plex:
-          switch: False
-          sensors:
-            - status
-            - uptime
-            - cpu_percentage_usage
-            - memory_usage
-            - memory_percentage_usage
-            - network_total_up
-            - network_total_down
+monitor_docker:
+  - name: Docker
+    containers:
+      - plex
+      - code-server
+      - iCloudPD-matt
+      - docker_bitwarden_1
+      - home-assistant
+      - docker_esphome_1
+      - node-red
+      - docker_monitoring_1
+      - letsencrypt
+      - mosquitto
+      - adbd
+      - tautulli
+      - phpmyadmin
+      - bazarr
+      - ombi
+      - nzbget
+      - portainer
+      - channels-dvr
+      - sonarr
+      - mariadb
+      - radarr
+    rename:
+      docker_bitwarden_1: Bitwarden 
+      docker_esphome_1: ESPhome
+      docker_monitoring_1: Glances
+    monitored_conditions:
+      - version
+      - containers_running
+      - containers_total
+      - containers_cpu_percentage
+      - containers_memory
+      - containers_memory_percentage
+      - status
+      - memory
+      - cpu_percentage
+      - memory_percentage
+
+spotify:
+  client_id: !secret spotify_clientid
+  client_secret: !secret spotify_clientsecret
+
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
+  
