@@ -112,7 +112,7 @@ speedtestdotnet:
 
 remote:
   - platform: broadlink
-    host: 192.168.68.122
+    host: 192.168.68.130
     mac: 24-DF-A7-7A-A6-53
     type: rm_mini3_redbean
 
