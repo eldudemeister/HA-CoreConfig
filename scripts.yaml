@@ -82,6 +82,9 @@
   sequence:
   - data:
       command: power
-      device: television
+      device: bedroomtv
     entity_id: remote.broadlink
     service: remote.send_command
+  - data: {}
+    entity_id: media_player.bedroom_firestick
+    service: media_player.toggle
