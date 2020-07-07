@@ -24,3 +24,16 @@
   - data:
       message: Matt is on his way home!
     service: notify.mobile_app_amys_iphone
+- id: '1593613973496'
+  alias: New Podcast Notification
+  description: ''
+  trigger:
+  - event_data: {}
+    event_type: feedreader
+    platform: event
+  condition: []
+  action:
+  - data:
+      message: '{{trigger.event.data.title}}'
+      title: New Podcast Available
+    service: notify.mobile_app_matts_iphone

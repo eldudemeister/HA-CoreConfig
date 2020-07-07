@@ -170,3 +170,6 @@ feedreader:
   urls:
     - https://selfhosted.show
     - https://hasspodcast.io/feed/podcast
+
+tts:
+  - platform: google_translate

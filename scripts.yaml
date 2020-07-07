@@ -88,3 +88,38 @@
   - data: {}
     entity_id: media_player.bedroom_firestick
     service: media_player.toggle
+'1593723061135':
+  alias: Enter
+  sequence:
+  - data:
+      command: ENTER
+      entity_id: media_player.shieldtv
+    entity_id: media_player.shieldtv
+    service: androidtv.adb_command
+'1594150738211':
+  alias: Meal time
+  sequence:
+  - data:
+      entity_id: media_player.living_room_mini
+      message: Cups at the table please, boys.
+    service: tts.google_translate_say
+  - condition: state
+    entity_id: media_player.shieldtv
+    state: 'on'
+  - timeout: 00:05:00
+    wait_template: ''
+  - data:
+      command: PAUSE
+      entity: media_player.shieldtv
+    service: androidtv.adb_command
+'1594151046448':
+  alias: Bathtime
+  sequence:
+  - data:
+      entity_id: media_player.living_room_mini
+      message: Splashy fun time boys!
+    service: tts.google_translate_say
+  - data:
+      entity: light.cubby_light
+      flash: short
+    service: light.turn_on
