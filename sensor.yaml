@@ -85,6 +85,7 @@
             states.light.hall_light,
             states.light.cubby_light,
             states.light.bedside_light,
+            states.switch.plug_01_relay_1, 
             states.light.wled,
             states.light.bulb
             ] %}
@@ -101,3 +102,16 @@
         friendly_name: "Weather Condition"
         value_template: "{{ states('weather.home') }}"
  - platform: spotcast
+ - platform: template
+   sensors:
+     media_players_on: 
+        unit_of_measurement: 'on'
+        value_template: >
+          {% set media_players = [
+            states.media_player.kitchen_display,
+            states.media_player.living_room_mini,
+            states.media_player.office_sonos
+            ] %}
+          {{ media_players | selectattr('state','eq','playing') | list | count }} 
+
+          
