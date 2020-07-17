@@ -165,3 +165,6 @@ feedreader:
 
 tts:
   - platform: google_translate
+
+lovelace:
+  mode: yaml

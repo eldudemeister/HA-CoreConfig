@@ -1,0 +1,983 @@
+custom_header:
+  background: var(--primary-background-color)
+  compact_mode: true
+  elements_color: var(--primary-text-color)
+  menu_hide: true
+  tab_indicator_color: var(--primary-text-color)
+views:
+  - badges: []
+    cards:
+      - cards:
+          - content: >
+              # {% if now().hour  < 5 %} Good Night {% elif now().hour < 12 %}
+              Good Morning {%elif now().hour < 18 %} Good Afternoon {% else %}
+              Good Evening {% endif %}Matt.
+            style:
+              .: |
+                ha-card {
+                  --paper-card-background-color: none !important;
+                  box-shadow: none !important;
+                  height: 20px; 
+                }
+              ha-markdown:
+                $: |
+                  h1 {
+                    font-size: 20px;
+                    font-weight: bold;
+                    font-family: Helvetica;
+                    letter-spacing: '-0.01em';
+                  }
+            type: markdown
+          - content: >
+              # Everyone is {{ 'home' if is_state('input_boolean.amy_home',
+              'on') else 'away' }} and the house is in {{ 'home' if
+              is_state('group.family', 'on') else 'away' }}  mode
+            style:
+              .: |
+                ha-card {
+                  --paper-card-background-color: none !important;
+                  box-shadow: none !important;
+                  height: 50px; 
+                }
+              ha-markdown:
+                $: |
+                  h1 {
+                    font-size: 15px;
+                    font-weight: thin;
+                    font-family: Helvetica;
+                    letter-spacing: '-0.01em';
+                  }
+            type: markdown
+        content: ''
+        type: vertical-stack
+      - cards:
+          - cards:
+              - cards:
+                  - icon: 'mdi:lightbulb-multiple'
+                    show_icon: true
+                    show_name: false
+                    style: |
+                      ha-card {
+                        margin: 10px;
+                        box-shadow: 
+                          {% if is_state('sun.sun', 'above_horizon') %}
+                            -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                          {% elif is_state('sun.sun', 'below_horizon') %}
+                            -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                          {% endif %}                 
+                      }
+                    styles:
+                      card:
+                        - width: 80px
+                        - height: 80px
+                        - border-radius: 15px
+                        - background-color: var(--primary-background-color)
+                      icon:
+                        - color: var(--primary-text-color)
+                    tap_action:
+                      action: navigate
+                      haptic: light
+                      navigation_path: /lovelace/1
+                    type: 'custom:button-card'
+                  - cards:
+                      - content: |
+                          # Lights
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                              height: 20px; 
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 20px;
+                                font-weight: bold;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                      - content: >
+                          # {% if is_state('sensor.number_of_lights_on', '0')%}
+                          There are no lights on. {% elif
+                          is_state('sensor.number_of_lights_on','1')%} There is
+                          1 light on.  {% else %}  There are
+                          {{states('sensor.number_of_lights_on')}}  lights on. 
+                          {% endif%}
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 15px;
+                                font-weight: thin;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                    type: vertical-stack
+                type: horizontal-stack
+              - cards:
+                  - icon: 'mdi:television'
+                    show_icon: true
+                    show_name: false
+                    style: |
+                      ha-card {
+                        margin: 10px;
+                        box-shadow: 
+                          {% if is_state('sun.sun', 'above_horizon') %}
+                            -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                          {% elif is_state('sun.sun', 'below_horizon') %}
+                            -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                          {% endif %}    
+                      }
+                    styles:
+                      card:
+                        - width: 80px
+                        - height: 80px
+                        - border-radius: 15px
+                        - background-color: var(--primary-background-color)
+                      icon:
+                        - color: var(--primary-text-color)
+                    tap_action:
+                      action: navigate
+                      haptic: light
+                      navigation_path: /lovelace/2
+                    type: 'custom:button-card'
+                  - cards:
+                      - content: |
+                          # Media
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                              height: 20px; 
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 20px;
+                                font-weight: bold;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                      - content: >
+                          # The living room TV is {{
+                          states("binary_sensor.tv_status") }} and {% if
+                          is_state('sensor.media_players_on', '0')%} there is no
+                          music playing. {% elif
+                          is_state('sensor.media_players_on','1')%} there is
+                          music playing.
+                            {%endif%}
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 15px;
+                                font-weight: thin;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                    type: vertical-stack
+                type: horizontal-stack
+              - cards:
+                  - icon: 'mdi:thermostat'
+                    show_icon: true
+                    show_name: false
+                    style: |
+                      ha-card {
+                        margin: 10px;
+                        box-shadow: 
+                          {% if is_state('sun.sun', 'above_horizon') %}
+                            -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                          {% elif is_state('sun.sun', 'below_horizon') %}
+                            -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                          {% endif %}   
+                      }
+                    styles:
+                      card:
+                        - width: 80px
+                        - height: 80px
+                        - border-radius: 15px
+                        - background-color: var(--primary-background-color)
+                      icon:
+                        - color: var(--primary-text-color)
+                    tap_action:
+                      action: navigate
+                      haptic: light
+                      navigation_path: /lovelace/3
+                    type: 'custom:button-card'
+                  - cards:
+                      - content: |
+                          # Heating
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                              height: 20px; 
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 20px;
+                                font-weight: bold;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                      - content: >
+                          # The heating is set to {{
+                          states("climate.living_room_thermostat") }}.
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 15px;
+                                font-weight: thin;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                    type: vertical-stack
+                type: horizontal-stack
+              - cards:
+                  - icon: 'mdi:linux'
+                    show_icon: true
+                    show_name: false
+                    style: |
+                      ha-card {
+                        margin: 10px;
+                        box-shadow: 
+                          {% if is_state('sun.sun', 'above_horizon') %}
+                            -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                          {% elif is_state('sun.sun', 'below_horizon') %}
+                            -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                          {% endif %}   
+                      }
+                    styles:
+                      card:
+                        - width: 80px
+                        - height: 80px
+                        - border-radius: 15px
+                        - background-color: var(--primary-background-color)
+                      icon:
+                        - color: var(--primary-text-color)
+                    tap_action:
+                      action: navigate
+                      haptic: light
+                      navigation_path: /lovelace/4
+                    type: 'custom:button-card'
+                  - cards:
+                      - content: |
+                          # System Info
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                              height: 20px; 
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 20px;
+                                font-weight: bold;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                      - content: |
+                          # Everything is running as expected. 
+                        style:
+                          .: |
+                            ha-card {
+                              --paper-card-background-color: none !important;
+                              box-shadow: none !important;
+                            }
+                          ha-markdown:
+                            $: |
+                              h1 {
+                                font-size: 15px;
+                                font-weight: thin;
+                                font-family: Helvetica;
+                                letter-spacing: '-0.01em';
+                              }
+                        type: markdown
+                    type: vertical-stack
+                type: horizontal-stack
+            type: vertical-stack
+        type: vertical-stack
+      - cards:
+          - entity: light.cubby_light
+            hold_action:
+              action: more-info
+              haptic: medium
+            icon: 'mdi:lamp'
+            name: Cubby
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;  
+                margin-left: 6.5px;
+                box-shadow: 
+                 {% if is_state('sun.sun', 'above_horizon') and is_state('light.cubby_light', 'on') %}
+                   inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                 {% elif is_state('sun.sun', 'above_horizon') and is_state('light.cubby_light', 'off') %}                      
+                   -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                 {% elif is_state('sun.sun', 'below_horizon') and is_state('light.cubby_light', 'on') %}                      
+                   inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                 {% elif is_state('sun.sun', 'below_horizon') and is_state('light.cubby_light', 'off') %}   
+                   -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                 {% endif %}                      
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: toggle
+              haptic: light
+            type: 'custom:button-card'
+          - entity: group.decklights
+            hold_action:
+              action: more-info
+              haptic: medium
+            icon: 'mdi:spotlight'
+            name: Deck
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;  
+                margin-left: 6.5px;
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') and is_state('switch.plug_01_relay_1', 'on') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'above_horizon') and is_state('switch.plug_01_relay_1', 'off') %}                      
+                    -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('switch.plug_01_relay_1', 'on') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('switch.plug_01_relay_1', 'off') %}   
+                    -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                  {% endif %}                      
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: toggle
+              haptic: light
+            type: 'custom:button-card'
+          - entity: light.bulb
+            hold_action:
+              action: more-info
+              haptic: medium
+            icon: 'mdi:door'
+            name: Front Door
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;                
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') and is_state('light.bulb', 'on') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'above_horizon') and is_state('light.bulb', 'off') %}                      
+                    -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('light.bulb', 'on') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('light.bulb', 'off') %}   
+                    -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                  {% endif %}                           
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: toggle
+              haptic: light
+            type: 'custom:button-card'
+          - entity: light.bedside_light
+            hold_action:
+              action: more-info
+              haptic: medium
+            icon: 'mdi:bed-double'
+            name: Bedside
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;  
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') and is_state('light.bedside_light', 'on') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'above_horizon') and is_state('light.bedside_light', 'off') %}                      
+                    -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('light.bedside_light', 'on') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('light.bedside_light', 'off') %}   
+                    -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                  {% endif %}     
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: toggle
+              haptic: light
+            type: 'custom:button-card'
+        type: horizontal-stack
+    icon: 'mdi:home'
+    title: ''
+  - badges: []
+    cards:
+      - enableColumns: true
+        rows:
+          - columns:
+              - column: 1
+                entities:
+                  - entities:
+                      - entity: light.hall_light
+                        popup:
+                          type: 'custom:light-popup-card'
+                      - entity: light.bedroom_light
+                        popup:
+                          type: 'custom:light-popup-card'
+                      - entity: light.bedside_light
+                      - entity: light.cubby_light
+                      - entity: light.wled
+                        icon: 'mdi:lightbulb'
+                        name: Jasper Bedlight
+                      - entity: group.decklights
+                        icon: 'mdi:lightbulb'
+                        name: Decklights
+                      - entity: light.bulb
+                        name: Front Door Light
+                    font-size: 20px;
+                    font-weight: bold;
+                    popup:
+                      type: 'custom:light-popup-card'
+                    title: Lights
+                tileOnRow: 6
+            row: 1
+        type: 'custom:homekit-card'
+    icon: 'mdi:lightbulb'
+  - badges: []
+    cards:
+      - enableColumns: true
+        rows:
+          - columns:
+              - column: 3
+                entities:
+                  - entities:
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/r1.jpg'
+                        name: BBC Radio 1
+                        tap_action:
+                          action: call-service
+                          service: media_player.play_media
+                          service_data:
+                            entity_id: media_player.kitchen_display
+                            media_content_id: >-
+                              http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p
+                            media_content_type: audio/mp4
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/absolute.png'
+                        name: Absolute Radio
+                        tap_action:
+                          action: call-service
+                          service: media_player.play_media
+                          service_data:
+                            entity_id: media_player.kitchen_display
+                            media_content_id: >-
+                              https://ais.absoluteradio.co.uk/absoluteradiohigh.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&amsparams=playerid:BMUK_html5;skey:1593897078;&aw_0_1st.playerid=BMUK_html5&aw_0_1st.skey=1593897078&aw_0_1st.bauer_loggedin=false&awparams=loggedin:false;&aw_0_req.userConsent=BO2CRb-O2CRb-AGABBENDR-AAAAwx7_______9______9uz_Ov_v_f__33e8__9v_l_7_-___u_-33d4-_1vf99yfm1-7ftr3tp_87ues2_Xur__79__3z3_9pxP78k89r7337Mw_v-_v-b7JCPN_Y3v-8K96lGA
+                            media_content_type: audio/mp4
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/absolute90s.png'
+                        name: Absolute Radio 90s
+                        tap_action:
+                          action: call-service
+                          service: media_player.play_media
+                          service_data:
+                            entity_id: media_player.kitchen_display
+                            media_content_id: >-
+                              https://ais.absoluteradio.co.uk/absolute90shigh.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&amsparams=playerid:BMUK_html5;skey:1593897363;&aw_0_1st.playerid=BMUK_html5&aw_0_1st.skey=1593897363&aw_0_1st.bauer_loggedin=false&awparams=loggedin:false;&aw_0_req.userConsent=BO2CRb-O2CRb-AGABBENDR-AAAAwx7_______9______9uz_Ov_v_f__33e8__9v_l_7_-___u_-33d4-_1vf99yfm1-7ftr3tp_87ues2_Xur__79__3z3_9pxP78k89r7337Mw_v-_v-b7JCPN_Y3v-8K96lGA
+                            media_content_type: audio/mp4
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/absolute00s.png'
+                        name: Absolute Radio 00s
+                        tap_action:
+                          action: call-service
+                          service: media_player.play_media
+                          service_data:
+                            entity_id: media_player.kitchen_display
+                            media_content_id: >-
+                              https://ais.absoluteradio.co.uk/absolute00shigh.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&amsparams=playerid:BMUK_html5;skey:1593897423;&aw_0_1st.playerid=BMUK_html5&aw_0_1st.skey=1593897423&aw_0_1st.bauer_loggedin=false&awparams=loggedin:false;&aw_0_req.userConsent=BO2CRb-O2CRb-AGABBENDR-AAAAwx7_______9______9uz_Ov_v_f__33e8__9v_l_7_-___u_-33d4-_1vf99yfm1-7ftr3tp_87ues2_Xur__79__3z3_9pxP78k89r7337Mw_v-_v-b7JCPN_Y3v-8K96lGA
+                            media_content_type: audio/mp4
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/r5l.png'
+                        name: BBC 5Live
+                        tap_action:
+                          action: call-service
+                          service: media_player.play_media
+                          service_data:
+                            entity_id: media_player.kitchen_display
+                            media_content_id: >-
+                              http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_five_live.m3u8
+                            media_content_type: audio/mp4
+                    title: Radio
+                tileOnRow: 6
+            row: 3
+          - columns:
+              - column: 4
+                entities:
+                  - entities:
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/2016playlisticon.png'
+                        name: Top Songs 2016
+                        style: |
+                          :host {
+                               --tile-image-radius: 0;
+                           } 
+                           .icon.image {
+                           position: absolute;
+                           width: 100%;
+                           height: 100%;
+                           left: 0;
+                           top: 0;
+                           z-index: -1;
+                          }
+                          .icon.image img {
+                             height: 100%;
+                          }
+                        tap_action:
+                          action: call-service
+                          entity_id: media_player.kitchen_display
+                          service: spotcast.start
+                          service_data:
+                            device_name: Kitchen Display
+                            entity_id: media_player.kitchen_display
+                            offset: 1
+                            random_song: true
+                            repeat: track
+                            shuffle: true
+                            uri: 'spotify:playlist:37i9dQZF1CAaiIWVF9iQy0'
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/dm1.png'
+                        name: Daily Mix 1
+                        tap_action:
+                          action: call-service
+                          entity_id: media_player.kitchen_display
+                          service: spotcast.start
+                          service_data:
+                            device_name: Kitchen Display
+                            entity_id: media_player.kitchen_display
+                            offset: 1
+                            random_song: true
+                            repeat: track
+                            shuffle: true
+                            uri: 'spotify:playlist:37i9dQZF1E355kQCVLcGV2'
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/dm2.png'
+                        name: Daily Mix 2
+                        tap_action:
+                          action: call-service
+                          entity_id: media_player.kitchen_display
+                          service: spotcast.start
+                          service_data:
+                            device_name: Kitchen Display
+                            entity_id: media_player.kitchen_display
+                            offset: 1
+                            random_song: true
+                            repeat: track
+                            shuffle: true
+                            uri: 'spotify:playlist:37i9dQZF1E36VlCvIx29Ze'
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/dm3.png'
+                        name: Daily Mix 3
+                        tap_action:
+                          action: call-service
+                          entity_id: media_player.kitchen_display
+                          service: spotcast.start
+                          service_data:
+                            device_name: Kitchen Display
+                            entity_id: media_player.kitchen_display
+                            offset: 1
+                            random_song: true
+                            repeat: track
+                            shuffle: true
+                            uri: 'spotify:playlist:37i9dQZF1E35WyQto9Lhlg'
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/dw.png'
+                        name: Discover Weekly
+                        tap_action:
+                          action: call-service
+                          entity_id: media_player.kitchen_display
+                          service: spotcast.start
+                          service_data:
+                            device_name: Kitchen Display
+                            entity_id: media_player.kitchen_display
+                            offset: 1
+                            random_song: true
+                            repeat: track
+                            shuffle: true
+                            uri: 'spotify:playlist:37i9dQZEVXcX52TXXdfkJi'
+                      - entity: media_player.kitchen_display
+                        image: 'http://192.168.68.110:8123/local/rr.png'
+                        name: Release Radar
+                        tap_action:
+                          action: call-service
+                          entity_id: media_player.kitchen_display
+                          service: spotcast.start
+                          service_data:
+                            device_name: Kitchen Display
+                            entity_id: media_player.kitchen_display
+                            offset: 1
+                            random_song: true
+                            repeat: track
+                            shuffle: true
+                            uri: 'spotify:playlist:37i9dQZEVXbhYPJagkluwR'
+                    title: Spotify
+                tileOnRow: 4
+            row: 4
+          - columns:
+              - column: 4
+                entities:
+                  - entities:
+                      - entity: input_boolean.stop_music
+                        tap_action:
+                          service: input_boolean.turn_on
+                          service_data:
+                            entity_id: input_boolean.stop_music
+                        title: Stop Music
+                      - entity: media_player.shieldtv
+                        hold_action:
+                          service: script.1591217907229
+                        icon: 'mdi:television'
+                        tap_action:
+                          action: call-service
+                          service: media_player.turn_on
+                          service_data:
+                            entity_id: media_player.shieldtv
+                      - entity: media_player.bedroom_firestick
+                        hold_action:
+                          service: media_player.turn_off
+                          service_data:
+                            entity_id: media_player.bedroom_firestick
+                        icon: 'mdi:television'
+                        tap_action:
+                          action: call-service
+                          service: media_player.turn_on
+                          service_data:
+                            entity_id: media_player.bedroom_firestick
+                      - entity: script.1593723061135
+                        name: Skip Youtube Ads
+                        tap_action:
+                          action: call-service
+                          service: script.1593723061135
+                    title: Media
+                tileOnRow: 7
+            row: 2
+        type: 'custom:homekit-card'
+    icon: 'mdi:television'
+  - badges: []
+    cards:
+      - entity: climate.living_room_thermostat
+        style: |
+          ha-card {
+              background-color: var(--primary-background-color);
+              border-radius: 15px;
+              margin: 10px;
+              box-shadow: 
+                {% if is_state('sun.sun', 'above_horizon') %}
+                  -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                {% else %}
+                  -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                {% endif %}   
+           }     
+        type: thermostat
+    icon: 'mdi:thermostat'
+  - badges: []
+    cards:
+      - cards:
+          - entities:
+              - entity: sensor.glances_cpu_used
+                name: CPU Used %
+              - entity: sensor.glances_ram_used_percent
+                name: RAM Used %
+              - entity: sensor.glances_etc_hostname_used_percent_2
+                name: Disk Used %
+            type: glance
+          - entities:
+              - sensor.cert_expiry_bridgemanor_co_uk
+              - entity: sensor.myip
+                name: External IP
+              - entity: sensor.linux_server_uptime
+                name: Uptime
+              - entity: sensor.installed_version
+                name: Home Assistant Installed Version
+              - entity: sensor.latest_available_version
+                name: Home Assistant Latest Available Version
+            type: entities
+        style: |
+          ha-card {
+              background-color: var(--primary-background-color);
+              border-radius: 15px;
+              margin: 10px;
+              box-shadow: 
+                {% if is_state('sun.sun', 'above_horizon') %}
+                  -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                {% else %}
+                  -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                {% endif %}   
+           }      
+        title: Linux Server Stats
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - entities:
+              - entity: sensor.synology_cpu_load_total
+                name: CPU Used %
+              - entity: sensor.synology_memory_usage_real
+                name: RAM Used %
+              - entity: sensor.synology_volume_2_volume_used
+                name: Disk Used %
+            type: glance
+          - entities:
+              - sensor.synology_drive_1_status
+              - sensor.synology_drive_2_status
+              - binary_sensor.synology_security_status
+            type: entities
+        style: |
+          ha-card {
+              background-color: var(--primary-background-color);
+              border-radius: 15px;
+              margin: 10px;
+              box-shadow: 
+                {% if is_state('sun.sun', 'above_horizon') %}
+                  -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                {% else %}
+                  -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                {% endif %}   
+           }      
+        title: Synology Stats
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - entities:
+              - entity: sensor.docker_cpu
+                name: CPU Used %
+              - entity: sensor.docker_memory_percent
+                name: RAM Used %
+              - entity: sensor.docker_containers_total
+                name: Total
+            type: glance
+          - entities:
+              - entities:
+                  - light.bed_light
+                  - light.ceiling_lights
+                  - light.kitchen_lights
+                head: sensor.docker_containers_running
+                name: Docker Containers
+                type: 'custom:fold-entity-row'
+            type: entities
+        style: |
+          ha-card {
+              background-color: var(--primary-background-color);
+              border-radius: 15px;
+              margin: 10px;
+              box-shadow: 
+                {% if is_state('sun.sun', 'above_horizon') %}
+                  -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                {% else %}
+                  -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                {% endif %}   
+           }      
+        title: Docker Stats
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - entities:
+              - entity: sensor.officepicpuusage
+                name: CPU
+              - entity: sensor.officepimemoryuse
+                name: RAM
+              - entity: sensor.officepidiskusedrive1
+                name: Disk
+            font_size: 75
+            line_color: blue
+            line_width: 8
+            name: Office Pi
+            show:
+              icon: false
+              state: false
+            type: 'custom:mini-graph-card'
+          - entities:
+              - entity: sensor.monitorpi_cpuusage
+                name: CPU
+              - entity: sensor.monitorpi_memoryuse
+                name: RAM
+              - entity: sensor.monitorpi_diskuse
+                name: Disk
+            font_size: 75
+            line_color: '#e74c3c'
+            line_width: 8
+            name: Monitor Pi
+            show:
+              icon: false
+              state: false
+            type: 'custom:mini-graph-card'
+          - entities:
+              - entity: sensor.wireguardpi_cpuusage
+                name: CPU
+              - entity: sensor.wireguardpi_memoryuse
+                name: RAM
+              - entity: sensor.wireguardpi_diskuse_drive1
+                name: Disk
+            font_size: 75
+            line_color: '#e74c3c'
+            line_width: 8
+            name: WireGuard Pi
+            show:
+              icon: false
+              state: false
+            type: 'custom:mini-graph-card'
+          - entities:
+              - entity: sensor.phosconpi_cpuusage
+                name: CPU
+              - entity: sensor.phosconpi_memoryuse
+                name: RAM
+              - entity: sensor.phosconpi_diskuse_drive1
+                name: Disk
+            font_size: 75
+            line_color: '#e74c3c'
+            line_width: 8
+            name: Phoscon Pi
+            show:
+              icon: false
+              state: false
+            type: 'custom:mini-graph-card'
+          - entities:
+              - sensor.pi_hole_ads_blocked_today
+              - sensor.pi_hole_ads_percentage_blocked_today
+              - sensor.pi_hole_dns_queries_today
+            type: entities
+        style: |
+          ha-card {
+              background-color: var(--primary-background-color);
+              border-radius: 15px;
+              margin: 10px;
+              box-shadow: 
+                {% if is_state('sun.sun', 'above_horizon') %}
+                  -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                {% else %}
+                  -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                {% endif %}   
+           }      
+        title: Raspberry Pi Stats
+        type: 'custom:vertical-stack-in-card'
+    icon: 'mdi:linux'
