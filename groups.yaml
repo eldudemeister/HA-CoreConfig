@@ -3,3 +3,9 @@ family:
     entities:
       - input_boolean.matt_home
       - input_boolean.amy_home
+
+decklights:
+    name: Decklights
+    entities:
+      - switch.plug_01_relay_1_2
+      - switch.plug_01_relay_1

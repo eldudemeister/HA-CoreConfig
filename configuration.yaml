@@ -102,14 +102,6 @@ google:
 recorder:
   db_url: !secret mariadb_link
 
-speedtestdotnet:
-  scan_interval:
-    days: 1
-  monitored_conditions:
-  - ping
-  - download
-  - upload
-
 remote:
   - platform: broadlink
     host: 192.168.68.130
