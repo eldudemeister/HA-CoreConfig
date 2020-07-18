@@ -9,3 +9,10 @@ decklights:
     entities:
       - switch.plug_01_relay_1_2
       - switch.plug_01_relay_1
+
+away_lights:
+    name: Away Lights
+    entities:
+      - light.bedside_light
+      - light.hall_light
+      - light.cubby_light
