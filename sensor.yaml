@@ -113,4 +113,26 @@
             states.media_player.office_sonos
             ] %}
           {{ media_players | selectattr('state','eq','playing') | list | count }} 
+ - platform: template
+   sensors:
+      tumble_dryer_switch_amps:
+        friendly_name_template: "{{ states.switch.tumble_dryer}} Current"
+        value_template: '{{ states.switch.tumble_dryer.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      tumble_dryer_switch_watts:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Current Consumption"
+        value_template: '{{ states.switch.tumble_dryer.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      tumble_dryer_switch_total_kwh:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Total Consumption"
+        value_template: '{{ states.switch.tumble_dryer.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tumble_dryer_switch_volts:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Voltage"
+        value_template: '{{ states.switch.tumble_dryer.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      tumble_dryer_switch_today_kwh:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Today's Consumption"
+        value_template: '{{ states.switch.tumble_dryer.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
 

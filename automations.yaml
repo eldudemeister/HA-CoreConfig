@@ -37,3 +37,59 @@
       message: '{{trigger.event.data.title}}'
       title: New Podcast Available
     service: notify.mobile_app_matts_iphone
+- id: '1595276636180'
+  alias: Turn off Jasper Bedlight in the morning.
+  description: ''
+  trigger:
+  - above: 10
+    device_id: 1769986992614a27a48273fbcec4225c
+    domain: sensor
+    entity_id: sensor.lightlevel_16
+    platform: device
+    type: illuminance
+  condition:
+  - after: 06:00
+    before: '18:00'
+    condition: time
+  action:
+  - data: {}
+    entity_id: light.wled
+    service: light.turn_off
+- id: '1595276723291'
+  alias: Turn off Jasper bedlight at night
+  description: ''
+  trigger:
+  - below: 2
+    device_id: 1769986992614a27a48273fbcec4225c
+    domain: sensor
+    entity_id: sensor.lightlevel_16
+    platform: device
+    type: illuminance
+  condition:
+  - after: '21:00'
+    before: 05:30
+    condition: time
+  action:
+  - data: {}
+    entity_id: light.wled
+    service: light.turn_off
+- id: 40d5c9a9-91e3-495b-bb00-479e0ddd404b
+  alias: Tumble Dryer finished
+  initial_state: true
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.tumble_dryer_switch_watts'') | int < 10 }}'
+    for:
+      seconds: 90
+  action:
+  - service: media_player.volume_set
+    data_template:
+      entity_id: media_player.living_room_mini
+      volume_level: 0.5
+  - delay:
+      seconds: 2
+  - service: tts.google_translate_say
+    entity_id: media_player.living_room_mini
+    data_template:
+      message: '{{ ["Your clothes are dry", "The tumble dryer has finished", "Go outside
+        and empty the tumble dryer"] | random }}'
