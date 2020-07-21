@@ -12,7 +12,6 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensor.yaml
-switch: !include switch.yaml
 
 frontend:
   themes: !include_dir_merge_named themes
@@ -83,10 +82,6 @@ device_tracker:
     devices:
       amyiphone: 'monitor/officemonitor/amys_iphone/device_tracker'
       mattiphone: 'monitor/officemonitor/matts_iphone/device_tracker'
-
-pi_hole:
-  - host: 192.168.68.106
-    api_key: !secret pihole_apikey
 
 zone: 
   - name: Home
@@ -177,3 +172,65 @@ binary_sensor:
         {{states('binary_sensor.doorbell') | upper}}
       {% endif %}
     off_delay: 15
+  - platform: command_line
+    name: Pi-hole Status
+    command: !secret pi_hole_status
+    device_class: connectivity
+    value_template: >-
+      {% if value_json.status == 'enabled' %}
+        {{'ON'}}
+      {% else %}
+        {{'OFF'}}
+      {% endif %}
+
+shell_command:
+  pihole_enable: !secret pi_hole_enable
+  pihole_disable: !secret pi_hole_disable
+  pihole_disable_time: !secret pi_hole_disable_time
+
+input_select:
+  pihole_time:
+    name: Disable Time (seconds)
+    options:
+      - 0
+      - 10
+      - 30
+      - 60
+      - 300
+      - 600
+      - 900
+      - 1800
+      - 3600
+    initial: 0
+
+switch:
+   - platform: template
+     switches:
+        pihole_control:
+            friendly_name: "Pi-hole"
+            value_template: "{{ is_state('binary_sensor.pi_hole_status', 'on') }}"
+            turn_on:
+                - service: shell_command.pihole_enable
+                - service: homeassistant.update_entity
+                  data:
+                      entity_id: binary_sensor.pi_hole_status
+            turn_off:
+                - service_template: >-
+                   {% if states('input_select.pihole_time') | float > 0 %}
+                       shell_command.pihole_disable_time
+                   {% else %}
+                       shell_command.pihole_disable
+                   {% endif %}
+                - service: input_select.select_option
+                  data:
+                      entity_id: input_select.pihole_time
+                      option: 0
+                - service: homeassistant.update_entity
+                  data:
+                      entity_id: binary_sensor.pi_hole_status
+            icon_template: >-
+               {% if is_state('binary_sensor.pi_hole_status', 'on') %}
+                  mdi:server-network
+               {% else %}
+                  mdi:server-network-off
+               {% endif %}
