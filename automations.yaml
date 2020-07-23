@@ -49,7 +49,6 @@
     type: illuminance
   condition:
   - after: 06:00
-    before: '18:00'
     condition: time
   action:
   - data: {}
@@ -93,3 +92,46 @@
     data_template:
       message: '{{ ["Your clothes are dry", "The tumble dryer has finished", "Go outside
         and empty the tumble dryer"] | random }}'
+- id: 66760039-0bc1-4870-9e91-e65cb42ae180
+  alias: Sensor offline
+  trigger:
+  - platform: event
+    event_type: state_changed
+  condition:
+  - condition: template
+    value_template: "{{\n  trigger.event.data.entity_id.startswith('sensor.') and\n\
+      \  trigger.event.data.new_state is not none and\n  trigger.event.data.new_state.state\
+      \ == 'unavailable' and\n  (\n    trigger.event.data.old_state is none or\n \
+      \   trigger.event.data.old_state.state != 'unavailable'\n  )\n}}\n"
+  action:
+  - data_template:
+      message: '{{ trigger.event.data.new_state.name }} is offline, please investigate'
+      title: Sensor Offline
+    service: notify.mobile_app_matts_iphone
+- id: 22a9792f-9e19-49dd-8fb9-f7e3091cae9f
+  alias: Light offline
+  trigger:
+  - event_type: state_changed
+    platform: event
+  condition:
+  - condition: template
+    value_template: "{{\n  trigger.event.data.entity_id.startswith('light.') and\n\
+      \  trigger.event.data.new_state is not none and\n  trigger.event.data.new_state.state\
+      \ == 'unavailable' and\n  (\n    trigger.event.data.old_state is none or\n \
+      \   trigger.event.data.old_state.state != 'unavailable'\n  )\n}}\n"
+  action:
+  - data_template:
+      message: '{{ trigger.event.data.new_state.name }} is offline, please investigate'
+      title: Light Offline
+    service: notify.mobile_app_matts_iphone
+- id: '1595536688939'
+  alias: Sonarr Download
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: thWIZPYvA6SJ9T2TQj6l7e2QbNcYQbBk
+  condition: []
+  action:
+  - data_template:
+      message: '{{ trigger.json }}'
+    service: notify.mobile_app_matts_iphone
