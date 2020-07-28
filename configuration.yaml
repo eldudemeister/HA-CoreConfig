@@ -12,6 +12,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensor.yaml
+#packages: !include_dir_named packages
 
 frontend:
   themes: !include_dir_merge_named themes
@@ -103,8 +104,6 @@ remote:
     mac: 24-DF-A7-7A-A6-53
     type: rm_mini3_redbean
 
-browser_mod:
-
 monitor_docker:
   - name: Docker
     containers:
@@ -152,11 +151,6 @@ spotify:
 spotcast:
   sp_dc: !secret sp_dc
   sp_key: !secret sp_key
-  
-feedreader:
-  urls:
-    - https://selfhosted.show
-    - https://hasspodcast.io/feed/podcast
 
 tts:
   - platform: google_translate
@@ -166,7 +160,7 @@ binary_sensor:
     name: 'Doorbell'
     state_topic: 'tele/tasmota_C28D40/RESULT'
     value_template: >-
-      {% if value_json.RfRaw.Data == 'AAA4186000DC02800D7AA355' %}
+      {% if value_json.RfReceived.Data == '0D7AA3' %}
         {{'ON'}}
       {% else %}
         {{states('binary_sensor.doorbell') | upper}}

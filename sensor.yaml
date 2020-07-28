@@ -3,22 +3,22 @@
    display_options:
       - 'time'
       - 'date'
- - platform: netdata
-   host: '192.168.68.117'
-   port: '19999'
-   name: PhosconPi
-   resources:
-    system.cpu:
-      data_group: system.cpu
-      element: system
-    system.ram:
-      data_group: 'system.ram'
-      element: 'used'
-      icon: mdi:chip
-    system.ram:
-      data_group: 'system.ram'
-      element: 'free'
-      icon: mdi:chip
+#- platform: netdata
+#   host: '192.168.68.117'
+#   port: '19999'
+#   name: PhosconPi
+#   resources:
+#    system.cpu:
+#      data_group: system.cpu
+#      element: system
+#    system.ram:
+#      data_group: 'system.ram'
+#      element: 'used'
+#      icon: mdi:chip
+#    system.ram:
+#      data_group: 'system.ram'
+#      element: 'free'
+#      icon: mdi:chip
  - platform: version
    name: Installed Version
    source: local

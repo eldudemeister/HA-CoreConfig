@@ -99,11 +99,23 @@
     event_type: state_changed
   condition:
   - condition: template
-    value_template: "{{\n  trigger.event.data.entity_id.startswith('sensor.') and\n\
-      \  trigger.event.data.new_state is not none and\n  trigger.event.data.new_state.state\
-      \ == 'unavailable' and\n  (\n    trigger.event.data.old_state is none or\n \
-      \   trigger.event.data.old_state.state != 'unavailable'\n  )\n}}\n"
+    value_template: >
+      {{
+        trigger.event.data.entity_id.startswith('sensor.') and
+        trigger.event.data.new_state is not none and
+        trigger.event.data.new_state.state == 'unavailable' and
+        (
+          trigger.event.data.old_state is none or
+          trigger.event.data.old_state.state != 'unavailable'
+        )
+      }}
+  mode: parallel
   action:
+  - wait_template: "{{ not is_state(trigger.event.data.entity_id, 'unavailable') }}"
+    timeout: "00:10"
+    continue_on_timeout: true
+  - condition: template
+    value_template: "{{ is_state(trigger.event.data.entity_id, 'unavailable') }}"
   - data_template:
       message: '{{ trigger.event.data.new_state.name }} is offline, please investigate'
       title: Sensor Offline
@@ -111,27 +123,43 @@
 - id: 22a9792f-9e19-49dd-8fb9-f7e3091cae9f
   alias: Light offline
   trigger:
-  - event_type: state_changed
-    platform: event
+  - platform: event
+    event_type: state_changed
   condition:
   - condition: template
-    value_template: "{{\n  trigger.event.data.entity_id.startswith('light.') and\n\
-      \  trigger.event.data.new_state is not none and\n  trigger.event.data.new_state.state\
-      \ == 'unavailable' and\n  (\n    trigger.event.data.old_state is none or\n \
-      \   trigger.event.data.old_state.state != 'unavailable'\n  )\n}}\n"
+    value_template: >
+      {{
+        trigger.event.data.entity_id.startswith('light.') and
+        trigger.event.data.new_state is not none and
+        trigger.event.data.new_state.state == 'unavailable' and
+        (
+          trigger.event.data.old_state is none or
+          trigger.event.data.old_state.state != 'unavailable'
+        )
+      }}
+  mode: parallel
   action:
+  - wait_template: "{{ not is_state(trigger.event.data.entity_id, 'unavailable') }}"
+    timeout: "00:10"
+    continue_on_timeout: true
+  - condition: template
+    value_template: "{{ is_state(trigger.event.data.entity_id, 'unavailable') }}"
   - data_template:
       message: '{{ trigger.event.data.new_state.name }} is offline, please investigate'
       title: Light Offline
     service: notify.mobile_app_matts_iphone
-- id: '1595536688939'
-  alias: Sonarr Download
+- id: '1593348724453'
+  alias: Notification on HACS update
   description: ''
   trigger:
-  - platform: webhook
-    webhook_id: thWIZPYvA6SJ9T2TQj6l7e2QbNcYQbBk
+  - above: '0'
+    entity_id: sensor.hacs
+    for: '600'
+    platform: numeric_state
   condition: []
   action:
-  - data_template:
-      message: '{{ trigger.json }}'
+  - data:
+      message: HACS reports updated repositories available.
+      title: HACS Update(s) Available.
     service: notify.mobile_app_matts_iphone
+  mode: single
