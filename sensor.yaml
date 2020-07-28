@@ -47,7 +47,7 @@
    unit_of_measurement: '%'
    name: 'Matt House'
  - platform: mqtt
-   state_topic: 'monitor/officemonitor/matts_iphone'
+   state_topic: 'monitor/office/matts_iphone'
    value_template: '{{ value_json.confidence }}'
    unit_of_measurement: '%'
    name: 'Matt Office'
@@ -64,7 +64,7 @@
    unit_of_measurement: '%'
    name: 'Amy House'
  - platform: mqtt
-   state_topic: 'monitor/officemonitor/amys_iphone'
+   state_topic: 'monitor/office/amys_iphone'
    value_template: '{{ value_json.confidence }}'
    unit_of_measurement: '%'
    name: 'Amy Office'

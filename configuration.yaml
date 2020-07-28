@@ -153,7 +153,18 @@ spotcast:
   sp_key: !secret sp_key
 
 tts:
-  - platform: google_translate
+  - platform: google_cloud
+    key_file: googlecloud.json
+    language: en-GB
+    gender: male
+    voice: en-GB-Standard-B
+    encoding: linear16
+    speed: 0.9
+    pitch: -2.5
+    gain: -5.0
+    profiles:
+      - telephony-class-application
+      - wearable-class-device
 
 binary_sensor:
   - platform: mqtt
