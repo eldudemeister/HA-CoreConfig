@@ -15,7 +15,7 @@ views:
             style:
               .: |
                 ha-card {
-                  --paper-card-background-color: none !important;
+                  --ha-card-background: none !important;
                   box-shadow: none !important;
                   height: 20px; 
                 }
@@ -29,13 +29,13 @@ views:
                   }
             type: markdown
           - content: >
-              # Everyone is {{ 'home' if is_state('input_boolean.amy_home',
-              'on') else 'away' }} and the house is in {{ 'home' if
+              # Amy is {{ 'home' if is_state('input_boolean.amy_home', 'on')
+              else 'out' }} and the house is in {{ 'home' if
               is_state('group.family', 'on') else 'away' }}  mode
             style:
               .: |
                 ha-card {
-                  --paper-card-background-color: none !important;
+                  --ha-card-background: none !important;
                   box-shadow: none !important;
                   height: 50px; 
                 }
@@ -85,7 +85,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                               height: 20px; 
                             }
@@ -108,7 +108,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                             }
                           ha-markdown:
@@ -155,7 +155,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                               height: 20px; 
                             }
@@ -179,7 +179,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                             }
                           ha-markdown:
@@ -226,7 +226,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                               height: 20px; 
                             }
@@ -245,7 +245,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                             }
                           ha-markdown:
@@ -292,7 +292,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                               height: 20px; 
                             }
@@ -310,7 +310,7 @@ views:
                         style:
                           .: |
                             ha-card {
-                              --paper-card-background-color: none !important;
+                              --ha-card-background: none !important;
                               box-shadow: none !important;
                             }
                           ha-markdown:
@@ -544,7 +544,7 @@ views:
             style:
               .: |
                 ha-card {
-                  --paper-card-background-color: none !important;
+                  --ha-card-background: none !important;
                   box-shadow: none !important;
                   height: 20px; 
                 }
@@ -557,15 +557,15 @@ views:
                     letter-spacing: '-0.01em';
                   }
             type: markdown
-          - content: |
-              # {% if is_state('sensor.number_of_lights_on', '0')%} There
-                          are no lights on. {% elif
-                          is_state('sensor.number_of_lights_on','1')%} There is 1 light
-                          on.  {% else %}  There are {{states('sensor.number_of_lights_on')}}  lights on.  {%endif%}
+          - content: >
+              # {% if is_state('sensor.number_of_lights_on', '0')%} There are no
+              lights on. {% elif is_state('sensor.number_of_lights_on','1')%}
+              There is 1 light on.  {% else %}  There are
+              {{states('sensor.number_of_lights_on')}}  lights on.  {%endif%}
             style:
               .: |
                 ha-card {
-                  --paper-card-background-color: none !important;
+                  --ha-card-background: none !important;
                   box-shadow: none !important;
                   height: 50px; 
                 }
@@ -616,7 +616,7 @@ views:
               }
               @media only screen and (min-width: 1200px) {
                  ha-card {
-                   margin: 8px;  
+                   margin: 9px;  
                    margin-left: 11px;               
                  }
               }
@@ -786,6 +786,8 @@ views:
               action: toggle
               haptic: light
             type: 'custom:button-card'
+        type: horizontal-stack
+      - cards:
           - entity: light.wled
             hold_action:
               action: more-info
@@ -813,6 +815,109 @@ views:
                  {% elif is_state('sun.sun', 'below_horizon') and is_state('light.wled', 'off') %}   
                    -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
                  {% endif %}                      
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: toggle
+              haptic: light
+            type: 'custom:button-card'
+          - entity: light.hall_light
+            hold_action:
+              action: more-info
+              haptic: medium
+            icon: 'mdi:ceiling-light'
+            name: Hall
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;  
+                margin-left: 6.5px;
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') and is_state('switch.plug_01_relay_1', 'on') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'above_horizon') and is_state('switch.plug_01_relay_1', 'off') %}                      
+                    -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('switch.plug_01_relay_1', 'on') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('switch.plug_01_relay_1', 'off') %}   
+                    -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                  {% endif %}                      
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: toggle
+              haptic: light
+            type: 'custom:button-card'
+          - entity: light.bedroom_light
+            hold_action:
+              action: more-info
+              haptic: medium
+            icon: 'mdi:ceiling-light'
+            name: Bedroom
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;                
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') and is_state('light.bulb', 'on') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'above_horizon') and is_state('light.bulb', 'off') %}                      
+                    -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('light.bulb', 'on') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% elif is_state('sun.sun', 'below_horizon') and is_state('light.bulb', 'off') %}   
+                    -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                  {% endif %}                           
               }
               @media only screen and (max-width: 600px) {
                  ha-card {
@@ -1074,6 +1179,11 @@ views:
                 {% endif %}   
            }     
         type: thermostat
+      - entities:
+          - entity: sensor.tumble_dryer_switch_watts
+        hours_to_show: 24
+        refresh_interval: 0
+        type: history-graph
     icon: 'mdi:thermostat'
   - badges: []
     cards:
@@ -1098,17 +1208,18 @@ views:
                 name: Home Assistant Latest Available Version
             type: entities
         style: |
-          ha-card {
-              background-color: var(--primary-background-color);
-              border-radius: 15px;
-              margin: 10px;
-              box-shadow: 
-                {% if is_state('sun.sun', 'above_horizon') %}
-                  -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
-                {% else %}
-                  -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
-                {% endif %}   
-           }      
+          style: |
+           ha-card {
+               background-color: var(--primary-background-color);
+               border-radius: 15px;
+               margin: 10px;
+               box-shadow: 
+                 {% if is_state('sun.sun', 'above_horizon') %}
+                   -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                 {% elif is_state('sun.sun', 'below_horizon') %}
+                   -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                 {% endif %}   
+            }  
         title: Linux Server Stats
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -1251,4 +1362,150 @@ views:
            }      
         title: Raspberry Pi Stats
         type: 'custom:vertical-stack-in-card'
+      - cards:
+          - entities:
+              - entity: sensor.pi_hole_ads_blocked_today
+                name: Ads Blocked Today
+              - entity: sensor.pi_hole_ads_percentage_blocked_today
+                name: Percentage %
+            type: glance
+          - entities:
+              - entity: switch.pihole_control
+              - entity: input_select.pihole_time
+                name: Disable Pi-hole
+              - entity: binary_sensor.pi_hole_status
+            type: entities
+        style: |
+          ha-card {
+              background-color: var(--primary-background-color);
+              border-radius: 15px;
+              margin: 10px;
+              box-shadow: 
+                {% if is_state('sun.sun', 'above_horizon') %}
+                  -8px -8px 8px 0 rgba(255,255,255,.5),8px 8px 8px 0 rgba(0,0,0,.03);
+                {% else %}
+                  -8px -8px 8px 0 rgba(50, 50, 50,.5),8px 8px 8px 0 rgba(0,0,0,.15);
+                {% endif %}   
+           }      
+        title: Pi-Hole Stats
+        type: 'custom:vertical-stack-in-card'
     icon: 'mdi:linux'
+  - path: ''
+    icon: 'mdi:television'
+    badges: []
+    cards:
+      - cards:
+          - entity: media_player.kitchen_display
+            hold_action:
+              action: more-info
+              haptic: medium
+            image: 'http://192.168.68.110:8123/local/r1.jpg'
+            name: Radio 1
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;  
+                margin-left: 6.5px;
+                box-shadow: 
+                 {% if is_state('sun.sun', 'above_horizon') and is_state('light.wled', 'on') %}
+                   inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                 {% elif is_state('sun.sun', 'above_horizon') and is_state('light.wled', 'off') %}                      
+                   -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                 {% elif is_state('sun.sun', 'below_horizon') and is_state('light.wled', 'on') %}                      
+                   inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                 {% elif is_state('sun.sun', 'below_horizon') and is_state('light.wled', 'off') %}   
+                   -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                 {% endif %}                      
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: call-service
+              service: media_player.play_media
+              service_data:
+                entity_id: media_player.kitchen_display
+                media_content_id: 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p'
+                media_content_type: audio/mp4
+            type: 'custom:button-card'
+          - entity: media_player.kitchen_display
+            hold_action:
+              action: more-info
+              haptic: medium
+            image: 'http://192.168.68.110:8123/local/r1.jpg'
+            name: Radio 1
+            show_icon: true
+            show_name: true
+            state:
+              - styles:
+                  icon:
+                    - color: 'var(--paper-item-icon-active-color)  '
+                value: 'on'
+            style: |
+              ha-card {
+                margin: 5px;  
+                margin-left: 6.5px;
+                box-shadow: 
+                 {% if is_state('sun.sun', 'above_horizon') and is_state('light.wled', 'on') %}
+                   inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                 {% elif is_state('sun.sun', 'above_horizon') and is_state('light.wled', 'off') %}                      
+                   -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                 {% elif is_state('sun.sun', 'below_horizon') and is_state('light.wled', 'on') %}                      
+                   inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                 {% elif is_state('sun.sun', 'below_horizon') and is_state('light.wled', 'off') %}   
+                   -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                 {% endif %}                      
+              }
+              @media only screen and (max-width: 600px) {
+                 ha-card {
+                   margin: 3px; 
+                   margin-left: 4px;                   
+                 }
+              }
+              @media only screen and (min-width: 1200px) {
+                 ha-card {
+                   margin: 8px;  
+                   margin-left: 11px;               
+                 }
+              }
+            styles:
+              card:
+                - width: 80px
+                - height: 80px
+                - border-radius: 15px
+                - background-color: var(--primary-background-color)
+              icon:
+                - color: var(--primary-text-color)
+            tap_action:
+              action: call-service
+              service: media_player.play_media
+              service_data:
+                entity_id: media_player.kitchen_display
+                media_content_id: >-
+                  https://ais.absoluteradio.co.uk/absoluteradiohigh.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&amsparams=playerid:BMUK_html5;skey:1593897078;&aw_0_1st.playerid=BMUK_html5&aw_0_1st.skey=1593897078&aw_0_1st.bauer_loggedin=false&awparams=loggedin:false;&aw_0_req.userConsent=BO2CRb-O2CRb-AGABBENDR-AAAAwx7_______9______9uz_Ov_v_f__33e8__9v_l_7_-___u_-33d4-_1vf99yfm1-7ftr3tp_87ues2_Xur__79__3z3_9pxP78k89r7337Mw_v-_v-b7JCPN_Y3v-8K96lGA 
+                media_content_type: audio/mp4
+            type: 'custom:button-card'
+        type: horizontal-stack

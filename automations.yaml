@@ -37,49 +37,14 @@
       message: '{{trigger.event.data.title}}'
       title: New Podcast Available
     service: notify.mobile_app_matts_iphone
-- id: '1595276636180'
-  alias: Turn off Jasper Bedlight in the morning.
-  description: ''
-  trigger:
-  - above: 10
-    device_id: 1769986992614a27a48273fbcec4225c
-    domain: sensor
-    entity_id: sensor.lightlevel_16
-    platform: device
-    type: illuminance
-  condition:
-  - after: 06:00
-    condition: time
-  action:
-  - data: {}
-    entity_id: light.wled
-    service: light.turn_off
-- id: '1595276723291'
-  alias: Turn off Jasper bedlight at night
-  description: ''
-  trigger:
-  - below: 2
-    device_id: 1769986992614a27a48273fbcec4225c
-    domain: sensor
-    entity_id: sensor.lightlevel_16
-    platform: device
-    type: illuminance
-  condition:
-  - after: '21:00'
-    before: 05:30
-    condition: time
-  action:
-  - data: {}
-    entity_id: light.wled
-    service: light.turn_off
 - id: 40d5c9a9-91e3-495b-bb00-479e0ddd404b
   alias: Tumble Dryer finished
   initial_state: true
   trigger:
     platform: template
-    value_template: '{{ states(''sensor.tumble_dryer_switch_watts'') | int < 10 }}'
+    value_template: '{{ states(''sensor.tumble_dryer_switch_watts'') | int < 200 }}'
     for:
-      seconds: 90
+      seconds: 120
   action:
   - service: media_player.volume_set
     data_template:
@@ -87,67 +52,11 @@
       volume_level: 0.5
   - delay:
       seconds: 2
-  - service: tts.google_translate_say
+  - service: tts.google_cloud_say
     entity_id: media_player.living_room_mini
     data_template:
       message: '{{ ["Your clothes are dry", "The tumble dryer has finished", "Go outside
         and empty the tumble dryer"] | random }}'
-- id: 66760039-0bc1-4870-9e91-e65cb42ae180
-  alias: Sensor offline
-  trigger:
-  - platform: event
-    event_type: state_changed
-  condition:
-  - condition: template
-    value_template: >
-      {{
-        trigger.event.data.entity_id.startswith('sensor.') and
-        trigger.event.data.new_state is not none and
-        trigger.event.data.new_state.state == 'unavailable' and
-        (
-          trigger.event.data.old_state is none or
-          trigger.event.data.old_state.state != 'unavailable'
-        )
-      }}
-  mode: parallel
-  action:
-  - wait_template: "{{ not is_state(trigger.event.data.entity_id, 'unavailable') }}"
-    timeout: "00:10"
-    continue_on_timeout: true
-  - condition: template
-    value_template: "{{ is_state(trigger.event.data.entity_id, 'unavailable') }}"
-  - data_template:
-      message: '{{ trigger.event.data.new_state.name }} is offline, please investigate'
-      title: Sensor Offline
-    service: notify.mobile_app_matts_iphone
-- id: 22a9792f-9e19-49dd-8fb9-f7e3091cae9f
-  alias: Light offline
-  trigger:
-  - platform: event
-    event_type: state_changed
-  condition:
-  - condition: template
-    value_template: >
-      {{
-        trigger.event.data.entity_id.startswith('light.') and
-        trigger.event.data.new_state is not none and
-        trigger.event.data.new_state.state == 'unavailable' and
-        (
-          trigger.event.data.old_state is none or
-          trigger.event.data.old_state.state != 'unavailable'
-        )
-      }}
-  mode: parallel
-  action:
-  - wait_template: "{{ not is_state(trigger.event.data.entity_id, 'unavailable') }}"
-    timeout: "00:10"
-    continue_on_timeout: true
-  - condition: template
-    value_template: "{{ is_state(trigger.event.data.entity_id, 'unavailable') }}"
-  - data_template:
-      message: '{{ trigger.event.data.new_state.name }} is offline, please investigate'
-      title: Light Offline
-    service: notify.mobile_app_matts_iphone
 - id: '1593348724453'
   alias: Notification on HACS update
   description: ''
@@ -162,4 +71,58 @@
       message: HACS reports updated repositories available.
       title: HACS Update(s) Available.
     service: notify.mobile_app_matts_iphone
+  mode: single
+- id: '1596048053090'
+  alias: Jasper Door Close
+  description: ''
+  trigger:
+  - device_id: 5ef3262dd4b544d68ed261b1a36a03de
+    domain: binary_sensor
+    entity_id: binary_sensor.openclose_22
+    platform: device
+    type: not_opened
+  condition:
+  - after: '20:30'
+    condition: time
+  action:
+  - data: {}
+    entity_id: light.wled
+    service: light.turn_off
+  mode: single
+- id: '1596048131147'
+  alias: Jasper Door Open
+  description: ''
+  trigger:
+  - device_id: 5ef3262dd4b544d68ed261b1a36a03de
+    domain: binary_sensor
+    entity_id: binary_sensor.openclose_22
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    platform: device
+    type: opened
+  condition:
+  - after: 06:00
+    before: 08:00
+    condition: time
+  action:
+  - data: {}
+    entity_id: light.wled
+    service: light.turn_off
+  mode: single
+- id: '1596134844590'
+  alias: morning
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.presence_15
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: media_player.kitchen_display
+      media_content_id: https://ais.absoluteradio.co.uk/absoluteradiohigh.aac?direct=true&listenerid=undefined&aw_0_1st.bauer_listenerid=undefined&amsparams=playerid:BMUK_html5;skey:1593897078;&aw_0_1st.playerid=BMUK_html5&aw_0_1st.skey=1593897078&aw_0_1st.bauer_loggedin=false&awparams=loggedin:false;&aw_0_req.userConsent=BO2CRb-O2CRb-AGABBENDR-AAAAwx7_______9______9uz_Ov_v_f__33e8__9v_l_7_-___u_-33d4-_1vf99yfm1-7ftr3tp_87ues2_Xur__79__3z3_9pxP78k89r7337Mw_v-_v-b7JCPN_Y3v-8K96lGA
+      media_content_type: audio/mp4
+    service: media_player.play_media
   mode: single

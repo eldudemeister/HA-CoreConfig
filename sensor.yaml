@@ -35,12 +35,12 @@
    name: "Linux Server Uptime"
    value_template: '{{ value_json }}'
    scan_interval: 60
- - platform: template
-   sensors:
-      speedtest_lastrun:
-        entity_id: sensor.speedtest_download # Entity to monitor for changes
-        friendly_name: "Speed Test Last Run"
-        value_template: "{{as_timestamp(states.sensor.speedtest_download.last_changed) | timestamp_custom('%A %d-%b-%y, %H:%M:%S')}}"
+ #- platform: template
+ #  sensors:
+ #     speedtest_lastrun:
+ #       entity_id: sensor.speedtest_download # Entity to monitor for changes
+ #       friendly_name: "Speed Test Last Run"
+ #       value_template: "{{as_timestamp(states.sensor.speedtest_download.last_changed) | timestamp_custom('%A %d-%b-%y, %H:%M:%S')}}"
  - platform: mqtt
    state_topic: 'monitor/monitorpi/matts_iphone'
    value_template: '{{ value_json.confidence }}'
@@ -101,7 +101,6 @@
       weather_condition:
         friendly_name: "Weather Condition"
         value_template: "{{ states('weather.home') }}"
- - platform: spotcast
  - platform: template
    sensors:
      media_players_on: 

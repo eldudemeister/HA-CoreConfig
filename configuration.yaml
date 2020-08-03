@@ -239,3 +239,6 @@ switch:
                {% else %}
                   mdi:server-network-off
                {% endif %}
+
+influxdb:
+  host: 127.0.0.1
