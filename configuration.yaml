@@ -32,12 +32,6 @@ media_player:
   - platform: channels
     name: Bedroom
     host: 192.168.68.105
-  - platform: spotify_metafy
-    users:
-      spotify_entity_id: media_player.spotify_matt
-      destination: Kitchen Display
-      playlists:
-      - uri: spotify:playlist:37i9dQZF1CAaiIWVF9iQy0
     
 cloudflare:
   email: !secret cloudfare_email
@@ -147,10 +141,6 @@ monitor_docker:
 spotify:
   client_id: !secret spotify_clientid
   client_secret: !secret spotify_clientsecret
-
-spotcast:
-  sp_dc: !secret sp_dc
-  sp_key: !secret sp_key
 
 tts:
   - platform: google_cloud

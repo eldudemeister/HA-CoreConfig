@@ -123,3 +123,23 @@
       entity: light.cubby_light
       flash: short
     service: light.turn_on
+turn_on_hall_and_bypass_motion:
+  alias: Turn on hall and bypass motion
+  mode: single
+  sequence:
+  - data: {}
+    entity_id: light.hall_light
+    service: light.turn_on
+  - data: {}
+    entity_id: input_boolean.hall_motion_bypass
+    service: input_boolean.turn_on
+turn_off_hall_motion_and_light:
+  alias: Turn off hall motion and light
+  mode: single
+  sequence:
+  - data: {}
+    entity_id: light.hall_light
+    service: light.turn_off
+  - data: {}
+    entity_id: input_boolean.hall_motion_bypass
+    service: input_boolean.turn_off
