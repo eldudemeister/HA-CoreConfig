@@ -16,3 +16,9 @@ away_lights:
       - light.bedside_light
       - light.hall_light
       - light.cubby_light
+
+garden_spekers:
+    name: Garden Speakers
+    entities:
+      - media_player.kitchen_display
+      - media_player.office_sonos

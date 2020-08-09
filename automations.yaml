@@ -88,6 +88,12 @@
   - data: {}
     entity_id: light.wled
     service: light.turn_off
+  - data: {}
+    entity_id: light.cubby_light
+    service: light.turn_off
+  - data: {}
+    entity_id: input_boolean.hall_motion_bypass
+    service: input_boolean.turn_off
   mode: single
 - id: '1596048131147'
   alias: Jasper Door Open
